@@ -150,8 +150,6 @@ public class MainActivity extends AppCompatActivity {
                         display.setText(Double.toString(val1 * val2));
                     else if (op == Operator.divide)
                         display.setText(Double.toString(val1 / val2));
-                    else
-                        display.setText("0");
                 }
 
             }
