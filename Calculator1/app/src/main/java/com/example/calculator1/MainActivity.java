@@ -13,9 +13,10 @@ public class MainActivity extends AppCompatActivity {
 
     TextView display;
     double val1, val2;
-
+    double valFinal;
     enum Operator{none, add, minus, multiply, divide}
     Operator op = Operator.none;
+    boolean isNewOp;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,47 +110,63 @@ public class MainActivity extends AppCompatActivity {
         divideBTN.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 op = Operator.divide;
-                if (!display.getText().toString().isEmpty())
+                if (!display.getText().toString().isEmpty()){
                     val1 = Double.parseDouble(display.getText().toString());
+                    isNewOp = true;
+                }
                 display.setText("");
             }
         });
         multiplyBTN.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 op = Operator.multiply;
-                if (!display.getText().toString().isEmpty())
+                if (!display.getText().toString().isEmpty()){
                     val1 = Double.parseDouble(display.getText().toString());
+                    isNewOp = true;
+                }
                 display.setText("");
             }
         });
         plusBTN.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
+            public void onClick(View v) {
                 op = Operator.add;
-                if (!display.getText().toString().isEmpty())
+                if (!display.getText().toString().isEmpty()){
                     val1 = Double.parseDouble(display.getText().toString());
+                    isNewOp = true;
+            }
                 display.setText("");
             }
         });
         minusBTN.setOnClickListener(new View.OnClickListener(){
-            public void onClick(View v){
+            public void onClick(View v) {
                 op = Operator.minus;
-                if (!display.getText().toString().isEmpty())
+                if (!display.getText().toString().isEmpty()) {
                     val1 = Double.parseDouble(display.getText().toString());
+                    isNewOp = true;
+            }
                 display.setText("");
             }
         });
         buequal.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
+
                 if (!display.getText().toString().isEmpty()) {
-                    val2 = Double.parseDouble(display.getText().toString());
+                    if (isNewOp)
+                        val2 = Double.parseDouble(display.getText().toString());
                     if (op == Operator.minus)
-                        display.setText(Double.toString(val1 - val2));
+                        valFinal = val1 - val2;
                     else if (op == Operator.add)
-                        display.setText(Double.toString(val1 + val2));
+                        valFinal = val1 + val2;
                     else if (op == Operator.multiply)
-                        display.setText(Double.toString(val1 * val2));
+                        valFinal = val1 * val2;
                     else if (op == Operator.divide)
-                        display.setText(Double.toString(val1 / val2));
+                        valFinal = val1 / val2;
+                    if (valFinal % 1 == 0)
+                        display.setText(Integer.toString((int) valFinal));
+                    else
+                        display.setText(Double.toString(valFinal));
+                    val1 = Double.parseDouble(display.getText().toString());
+                    isNewOp = false;
                 }
 
             }
