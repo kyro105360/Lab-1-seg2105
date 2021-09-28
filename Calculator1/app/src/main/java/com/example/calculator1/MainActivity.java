@@ -139,12 +139,14 @@ public class MainActivity extends AppCompatActivity {
         });
         minusBTN.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                op = Operator.minus;
-                if (!display.getText().toString().isEmpty()) {
+                if (display.getText().toString().isEmpty())
+                    display.setText("-");
+                else if (!display.getText().toString().equals("-")) {
+                    op = Operator.minus;
                     val1 = Double.parseDouble(display.getText().toString());
                     isNewOp = true;
-            }
-                display.setText("");
+                    display.setText("");
+                }
             }
         });
         buequal.setOnClickListener(new View.OnClickListener(){
@@ -153,7 +155,11 @@ public class MainActivity extends AppCompatActivity {
                 if (!display.getText().toString().isEmpty()) {
                     if (isNewOp)
                         val2 = Double.parseDouble(display.getText().toString());
-                    if (op == Operator.minus)
+                    else
+                        val1 = Double.parseDouble(display.getText().toString());
+                    if (op == Operator.none)
+                        valFinal = val1;
+                    else if (op == Operator.minus)
                         valFinal = val1 - val2;
                     else if (op == Operator.add)
                         valFinal = val1 + val2;
@@ -165,6 +171,7 @@ public class MainActivity extends AppCompatActivity {
                         display.setText(Integer.toString((int) valFinal));
                     else
                         display.setText(Double.toString(valFinal));
+                    valFinal = 0;
                     val1 = Double.parseDouble(display.getText().toString());
                     isNewOp = false;
                 }
