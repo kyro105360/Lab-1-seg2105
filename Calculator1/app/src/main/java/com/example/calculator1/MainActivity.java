@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         });
         budot.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
-                if (!display.getText().toString().contains(".") && !display.getText().toString().isEmpty())
+                if (!display.getText().toString().contains(".") && !display.getText().toString().isEmpty() && !display.getText().toString().equals("-"))
                     display.setText(display.getText() + ".");
             }
         });
@@ -110,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
         divideBTN.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 op = Operator.divide;
-                if (!display.getText().toString().isEmpty()){
+                if (!display.getText().toString().isEmpty() && !display.getText().toString().equals("-")){
                     val1 = Double.parseDouble(display.getText().toString());
                     isNewOp = true;
                 }
@@ -120,7 +120,7 @@ public class MainActivity extends AppCompatActivity {
         multiplyBTN.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
                 op = Operator.multiply;
-                if (!display.getText().toString().isEmpty()){
+                if (!display.getText().toString().isEmpty() && !display.getText().toString().equals("-")){
                     val1 = Double.parseDouble(display.getText().toString());
                     isNewOp = true;
                 }
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity {
         plusBTN.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
                 op = Operator.add;
-                if (!display.getText().toString().isEmpty()){
+                if (!display.getText().toString().isEmpty() && !display.getText().toString().equals("-")){
                     val1 = Double.parseDouble(display.getText().toString());
                     isNewOp = true;
             }
@@ -139,7 +139,7 @@ public class MainActivity extends AppCompatActivity {
         });
         minusBTN.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v) {
-                if (display.getText().toString().isEmpty())
+                if (display.getText().toString().isEmpty()) //if the user wants to enter a negative number
                     display.setText("-");
                 else if (!display.getText().toString().equals("-")) {
                     op = Operator.minus;
@@ -152,21 +152,29 @@ public class MainActivity extends AppCompatActivity {
         buequal.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
 
-                if (!display.getText().toString().isEmpty()) {
+                if (!display.getText().toString().isEmpty() && !display.getText().toString().equals("-")) {
                     if (isNewOp)
                         val2 = Double.parseDouble(display.getText().toString());
                     else
                         val1 = Double.parseDouble(display.getText().toString());
-                    if (op == Operator.none)
-                        valFinal = val1;
-                    else if (op == Operator.minus)
-                        valFinal = val1 - val2;
-                    else if (op == Operator.add)
-                        valFinal = val1 + val2;
-                    else if (op == Operator.multiply)
-                        valFinal = val1 * val2;
-                    else if (op == Operator.divide)
-                        valFinal = val1 / val2;
+
+                    switch(op) {
+                        case none:
+                            valFinal = val1;
+                            break;
+                        case minus:
+                            valFinal = val1 - val2;
+                            break;
+                        case add:
+                            valFinal = val1 + val2;
+                            break;
+                        case multiply:
+                            valFinal = val1 * val2;
+                            break;
+                        case divide:
+                            valFinal = val1 / val2;
+                            break;
+                    }
                     if (valFinal % 1 == 0)
                         display.setText(Integer.toString((int) valFinal));
                     else
